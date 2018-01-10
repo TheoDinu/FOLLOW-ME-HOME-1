@@ -1,0 +1,68 @@
+int buttonPin = 8;     
+int ledPin =  7; 
+int accPin = 3; 
+int potPin = 2;    
+int val = 0;
+int buttonState = 0;        
+int photocellPin = 0;
+int accState = 0 ;
+int photocellReading;     
+ 
+void setup() 
+{  
+  pinMode(ledPin, OUTPUT);
+  pinMode(buttonPin, INPUT);
+  pinMode(accPin, INPUT);
+  Serial.begin(9600);
+}
+void loop()
+{
+  val = analogRead(potPin);
+  photocellReading = analogRead(photocellPin);  
+ 
+  Serial.print("Light sensor = ");
+  Serial.print(photocellReading);  
+    
+  Serial.print("Timer = ");
+  Serial.print(val);    
+  
+  buttonState = digitalRead(buttonPin);
+  accState = digitalRead(accPin);
+
+ 
+ if (accState == LOW) 
+ {
+  if (buttonState == HIGH)
+  {
+   if (photocellReading < 400)  
+    {
+    digitalWrite(ledPin,HIGH);
+    delay(val*30);
+    digitalWrite(ledPin,LOW);
+    } 
+    }
+  else 
+  {
+    digitalWrite(ledPin,LOW);
+  }
+  } 
+  else if(accState == HIGH) 
+  {
+    if (photocellReading < 400)
+    {
+      delay(1500);
+      digitalWrite(ledPin,HIGH);
+    }
+    else
+    {
+      digitalWrite(ledPin,LOW);    
+  }    
+  } 
+}
+
+
+
+
+
+
+
